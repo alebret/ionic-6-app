@@ -1,0 +1,8 @@
+{
+  "name": "ionic6App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "4a82b307"
+}
