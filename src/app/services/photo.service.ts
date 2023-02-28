@@ -10,6 +10,7 @@ import { resolve } from 'dns';
 })
 export class PhotoService {
   public photos: UserPhoto[] = [];
+  private PHOTO_STORAGE: string = "photo";
 
   constructor() { }
   
@@ -60,7 +61,35 @@ export class PhotoService {
     const savedImageFile = await this.savePicture(capturedPhoto)
     // unshift ajoute de nouveaux elts au début du tableau
     this.photos.unshift(savedImageFile)
+
+    Preferences.set({
+      key: this.PHOTO_STORAGE,
+      value: JSON.stringify(this.photos),
+    })
   } 
+
+  public async loadSaved(){
+    // Retrieve cached photo array data
+    const photoList = await Preferences.get({ key:this.PHOTO_STORAGE });
+    this.photos = JSON.parse(photoList.value!) || [];
+
+    /**
+     * On mobile (coming up next!), we can directly set the source of an image tag - <img src="x" /> - to each photo file on the Filesystem, displaying them automatically. 
+     * On the web, however, we must read each image from the Filesystem into base64 format, using a new base64 property on the Photo object. 
+     * This is because the Filesystem API uses IndexedDB under the hood. 
+     */
+
+    for(let photo of this.photos) {
+      // Read each saved photo's data from the Filesystem
+      const readFile = await Filesystem.readFile({
+        path: photo.filepath,
+        directory: Directory.Data,
+      })
+
+      // Web platform only: Load the photo as base64 data
+      photo.webviewPath = `data:image/jpeg:base64,${readFile.data}`
+    }
+  }
 }
 
 export interface UserPhoto {
