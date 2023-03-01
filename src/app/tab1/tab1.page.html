@@ -1,17 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Device infos
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+ <ion-item>
+    <ion-label *ngIf="deviceInfos !== undefined">
+      <h2>Infos</h2>
+      <p>Plateforme : {{deviceInfos.platform}}</p>
+      <p>Nom : {{deviceInfos!.name}}</p>
+      <p>Version OS : {{deviceInfos!.osVersion}}</p>
+    </ion-label>
+  </ion-item>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-item *ngIf="deviceBattery !== undefined">
+    <ion-label>
+      <h2>Batterie</h2>
+      <p>Niveau de batterie : {{deviceBattery.batteryLevel! * 100 | number : '1.0-2'}}%</p>
+      <p>En charge : {{deviceBattery.isCharging}}</p>
+    </ion-label>
+  </ion-item> 
 </ion-content>
