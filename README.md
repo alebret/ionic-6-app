@@ -5,7 +5,9 @@ Création d'une application **Ionic 6** (Angular) utilisant **Capacitor**
 ## Description de l'appli
 
 - Application avec 3 tabs
-- Une tab inclus une fontionnalité de prise de photo (utilisation de `Camera`) et de galerie
+- Une tab inclut un plugin natif (`device`)
+- Une tab inclut une fontionnalité de prise de photo (utilisation de `Camera`) et de galerie
+- Une tab inclut un composent custom (un bouton) avec un style modifié & l'appel d'une plugin natif Android
 
 ## Liens
 
